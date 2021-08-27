@@ -10,7 +10,6 @@
 
 <h3 style="overflow: hidden;"><b>Data Siswa</b></h3>
 <table class="table table-hover">
-
     <tbody>
         <tr>
             <td><b>Email</b></td>

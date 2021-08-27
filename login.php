@@ -10,9 +10,7 @@ if (isset($_POST['submit'])) {
 		${$key} = $val;
 	}
 
-	$query	=	"SELECT a.password,a.role_user as role,a.id as id_akun, b.id as id_daftar from admin a, pendaftaran b 
-				WHERE email='$email' 
-				AND b.id = a.id_user";
+	$query	=	"SELECT * from admin WHERE email='$email'";
 
 	$exec 	= mysqli_query($conn, $query);
 
@@ -22,8 +20,10 @@ if (isset($_POST['submit'])) {
 			while ($rows = mysqli_fetch_array($exec)) {
 			    
 			    if (password_verify($password,$rows['password'])) {
-			    	$_SESSION['role_user'] 	= $rows['role'];
-			    	$_SESSION['auth']		= $rows['id_daftar'];
+			    	$_SESSION['role_user'] 	= $rows['role_user'];
+			    	$_SESSION['auth']		= $rows['Id'];
+						$_SESSION['email'] = $rows['email'];
+						$_SESSION['nama_admin'] = $rows['nama_admin'];
 
 			    	
 			    	echo'<script> window.location="dashboard/index.php"; </script> ';

@@ -13,7 +13,7 @@
 
 		$time = date('Y-m-d H:i:s');
 
-		$sql	= "INSERT INTO pendaftaran VALUES(null,'$full_name', '$nick_name', '$birth_place'
+		$sql	= "INSERT INTO pendaftaran VALUES(null,'$email','$full_name', '$nick_name', '$birth_place'
 					, '$birth_date' ,'$gender', '$child_number', '$child_total', '$alamat'
 					, '$father_name', '$birth_place_father','$birth_date_father', '$father_last_education'
 					, '$father_job', '$father_religion','$mother_name', '$birth_place_mother', '$birth_date_mother'
@@ -25,7 +25,7 @@
 
 			$id 		= $conn->insert_id;
 			//echo $id;
-			$query 		= "INSERT INTO admin VALUES(null, '$email', '$password', '',1, $id)";
+			$query 		= "INSERT INTO admin VALUES(null, '$email', '$password', '$full_name',1, $id)";
 
 			$exec_akun 	=  mysqli_query($conn, $query);
 

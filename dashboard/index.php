@@ -25,11 +25,10 @@ if ($_SESSION['role_user'] == 0) {
 
 }else{
 	$role = "User";
-    $query      = "SELECT a.*,b.* FROM pendaftaran a, admin b WHERE a.id = $id AND b.id_user=$id";
+    $email = $_SESSION['email'];
+    $query      = "SELECT * FROM pendaftaran, admin WHERE admin.email = pendaftaran.email AND pendaftaran.email='$email'";
 
     $exec       = mysqli_query($conn, $query);
-
-
     if ($exec) {
         while ($user = mysqli_fetch_array($exec)) {
             foreach ($user as $key=>$val) {
