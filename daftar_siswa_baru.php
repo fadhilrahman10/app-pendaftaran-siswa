@@ -1,35 +1,36 @@
-<?php  
-	//start the session
-	session_start();
+<?php
+//start the session
+session_start();
 
-	$redirect = "";
+$redirect = "";
 
-	if (isset($_SESSION['is_data_student_exist'])) {
-		$redirect = "<script> window.location='daftar_syarat.php'; </script>";
-	}else{
-		$redirect = "<script> window.location='daftar_data_orangtua.php'; </script>";
-	}
+if (isset($_SESSION['is_data_student_exist'])) {
+    $redirect = "<script> window.location='daftar_syarat.php'; </script>";
+} else {
+    $redirect = "<script> window.location='daftar_syarat.php'; </script>";
+}
 
-	//check if button next is clicked
-	if(isset($_POST['submit'])){
+//check if button next is clicked
+if (isset($_POST['submit'])) {
 
-		//set all name attr and value to created variable
-		foreach ($_POST as $key => $val) {
-			${$key} = $val;
-			$_SESSION[''.$key.''] = $val;
-		}
+    //set all name attr and value to created variable
+    foreach ($_POST as $key => $val) {
+        ${$key} = $val;
+        $_SESSION['' . $key . ''] = $val;
+    }
 
-		//check if session is not empty, then redirect to daftar_data_orangtua.php
-		if (!empty($_SESSION)) {
-			echo $redirect;
-			print_r($_SESSION);
-		}
-	}
+    //check if session is not empty, then redirect to daftar_data_orangtua.php
+    if (!empty($_SESSION)) {
+        echo $redirect;
+        print_r($_SESSION);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -45,15 +46,16 @@
     <!--     Fonts and icons     -->
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 
 </head>
-<body>
-	<div class="container">
-	    <div class="row">
-	        <div class="col-sm-12 col-md-8 col-lg-10 col-lg-offset-1">
 
-				<div class="card" style="margin-top: 50px">
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-10 col-lg-offset-1">
+
+                <div class="card" style="margin-top: 50px">
                     <div class="card-header" data-background-color="blue">
                         <h4 class="title">Data Calon Siswa</h4>
                         <p class="category">Isi Form pendaftaran dengan benar</p>
@@ -63,18 +65,30 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Nama Lengkap</label>
-                                        <input type="text" class="form-control" name="full_name" required autofocus
-                                        value="<?php isset($_SESSION['full_name'])  ?  print($_SESSION['full_name']) : ""; ?>">
+                                        <label class="control-label">NIS</label>
+                                        <input type="text" class="form-control" name="nis" required autofocus value="<?php isset($_SESSION['nis'])  ?  print($_SESSION['nis']) : ""; ?>">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group label-floating">
+                                        <label class="control-label">Nama Lengkap</label>
+                                        <input type="text" class="form-control" name="full_name" required autofocus value="<?php isset($_SESSION['full_name'])  ?  print($_SESSION['full_name']) : ""; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
                                         <label class="control-label">Nama Panggilan</label>
-                                        <input type="text" class="form-control" name="nick_name" required
-                                        value="<?php isset($_SESSION['nick_name'])  ?  print($_SESSION['nick_name']) : ""; ?>">
+                                        <input type="text" class="form-control" name="nick_name" required value="<?php isset($_SESSION['nick_name'])  ?  print($_SESSION['nick_name']) : ""; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Telp</label>
+                                        <input type="text" class="form-control" name="telp" required autofocus value="<?php isset($_SESSION['telp'])  ?  print($_SESSION['telp']) : ""; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -82,8 +96,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Tempat lahir</label>
-                                        <input type="text" class="form-control" name="birth_place" required
-                                        value="<?php isset($_SESSION['birth_place'])  ?  print($_SESSION['birth_place']) : ""; ?>">
+                                        <input type="text" class="form-control" name="birth_place" required value="<?php isset($_SESSION['birth_place'])  ?  print($_SESSION['birth_place']) : ""; ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -94,68 +107,68 @@
                                 </div>
                             </div>
                             <div class="row">
-                            	<div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Jenis Kelamin</label>
                                         <select name="gender" class="form-control">
-                                        	<option value="" disabled selected>-- Pilih Jenis Kelamin --</option>
-										
-                                        	<option value="L" <?php isset($_SESSION['gender']) && $_SESSION['gender'] == "L" ? print("selected") : "" ?>>Laki-laki</option>
-                                        	<option value="P" <?php isset($_SESSION['gender']) && $_SESSION['gender'] == "P" ? print("selected") : "" ?>>Perempuan</option>
+                                            <option value="" disabled selected>-- Pilih Jenis Kelamin --</option>
+
+                                            <option value="L" <?php isset($_SESSION['gender']) && $_SESSION['gender'] == "L" ? print("selected") : "" ?>>Laki-laki</option>
+                                            <option value="P" <?php isset($_SESSION['gender']) && $_SESSION['gender'] == "P" ? print("selected") : "" ?>>Perempuan</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Agama</label>
+                                        <input type="text" class="form-control" name="agama" value="<?php isset($_SESSION['agama'])  ?  print($_SESSION['agama']) : ""; ?>" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                            	<div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Anak Ke-</label>
-                                        <input type="number" class="form-control" name="child_number" 
-										value="<?php isset($_SESSION['child_number'])  ?  print($_SESSION['child_number']) : ""; ?>" 
-                                        required>
+                                        <input type="number" class="form-control" name="child_number" value="<?php isset($_SESSION['child_number'])  ?  print($_SESSION['child_number']) : ""; ?>" required>
                                     </div>
-                    
+
                                 </div>
 
-                              	<div class="col-md-6">
-                              		<div class="form-group label-floating">
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
                                         <label class="control-label">Jumlah Saudara Kandung</label>
-                                        <input type="number" class="form-control" name="child_total" 
-										value="<?php isset($_SESSION['child_total'])  ?  print($_SESSION['child_total']) : ""; ?>"
-                                        required>
+                                        <input type="number" class="form-control" name="child_total" value="<?php isset($_SESSION['child_total'])  ?  print($_SESSION['child_total']) : ""; ?>" required>
                                     </div>
-                              	</div>	
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Alamat</label>
-                                        <input type="text" class="form-control" name="alamat" 
-										value="<?php isset($_SESSION['alamat'])  ?  print($_SESSION['alamat']) : ""; ?>"
-                                        required>
+                                        <input type="text" class="form-control" name="alamat" value="<?php isset($_SESSION['alamat'])  ?  print($_SESSION['alamat']) : ""; ?>" required>
                                     </div>
                                 </div>
                             </div>
-                            
-                            
-                            <?php  
+
+                            <?php
                             if (isset($_SESSION['is_data_student_exist'])) {
                             ?>
-                            <button type="submit" name="submit" class="btn btn-primary pull-right">Kembali <i class="fa fa-arrow-right"></i></button>
+                                <button type="submit" name="submit" class="btn btn-primary pull-right">Kembali <i class="fa fa-arrow-right"></i></button>
                             <?php
-                            }else{
+                            } else {
                             ?>
-								<button type="submit" name="submit" class="btn btn-primary pull-right">Lanjut <i class="fa fa-arrow-right"></i></button>
+                                <button type="submit" name="submit" class="btn btn-primary pull-right">Lanjut <i class="fa fa-arrow-right"></i></button>
                             <?php
                             }
                             ?>
 
-                            
+
                             <div class="clearfix"></div>
                         </form>
                     </div>
                 </div>
-	    </div>
-	</div>
+            </div>
+        </div>
 </body>
+
 </html>

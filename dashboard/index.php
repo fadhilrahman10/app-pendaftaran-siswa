@@ -1,39 +1,38 @@
-<?php  
+<?php
 
 include '../auth.php';
 include '../koneksi/koneksi.php';
 
 $role = "";
 
-$id 	= $_SESSION['auth'];
+$id     = $_SESSION['auth'];
 
 
 if ($_SESSION['role_user'] == 0) {
-	$role = "Admin";
+    $role = "Admin";
     $query      = "SELECT * FROM admin WHERE id = $id";
 
     $exec       = mysqli_query($conn, $query);
 
     if ($exec) {
-    
+
         while ($user = mysqli_fetch_array($exec)) {
-            foreach ($user as $key=>$val) {
+            foreach ($user as $key => $val) {
                 ${$key} = $val;
-            }       
+            }
         }
     }
-
-}else{
-	$role = "User";
+} else {
+    $role = "User";
     $email = $_SESSION['email'];
-    $query      = "SELECT * FROM pendaftaran, admin WHERE admin.email = pendaftaran.email AND pendaftaran.email='$email'";
+    $query      = "SELECT * FROM siswa, admin WHERE admin.email = siswa.email AND siswa.email='$email'";
 
     $exec       = mysqli_query($conn, $query);
     if ($exec) {
         while ($user = mysqli_fetch_array($exec)) {
-            foreach ($user as $key=>$val) {
+            foreach ($user as $key => $val) {
                 ${$key} = $val;
-            }       
+            }
         }
     }
 }
@@ -44,34 +43,34 @@ if ($_SESSION['role_user'] == 0) {
 $getPage = $_GET['page'];
 
 switch ($getPage) {
-	case 1:
-		$page 				= "include/home.php";
-		$_SESSION['active']	= "1";
-		break;
-	case 2:
-		$page 				= "include/profile.php";
-		$_SESSION['active']	= "2";
-		break;
-	case 3:
-		$page 				= "include/edit_profile.php";
-		$_SESSION['active']	= "2";
-		break;
-	case 4:
-		$page 				= "include/syarat_pendaftaran.php";
-		$_SESSION['active'] = "3";
-		break;
-	case 5:
-		$page 				= "include/upload_akte.php";
-		$_SESSION['active'] = "3";
-		break;
-	case 6:
-		$page 				= "include/upload_foto2r.php";
-		$_SESSION['active'] = "3";
-		break;
-	case 7:
-		$page 				= "include/upload_ijazah.php";
-		$_SESSION['active']	= "3";
-		break;
+    case 1:
+        $page                 = "include/home.php";
+        $_SESSION['active']    = "1";
+        break;
+    case 2:
+        $page                 = "include/profile.php";
+        $_SESSION['active']    = "2";
+        break;
+    case 3:
+        $page                 = "include/edit_profile.php";
+        $_SESSION['active']    = "2";
+        break;
+    case 4:
+        $page                 = "include/syarat_pendaftaran.php";
+        $_SESSION['active'] = "3";
+        break;
+    case 5:
+        $page                 = "include/upload_akte.php";
+        $_SESSION['active'] = "3";
+        break;
+    case 6:
+        $page                 = "include/upload_foto2r.php";
+        $_SESSION['active'] = "3";
+        break;
+    case 7:
+        $page                 = "include/upload_ijazah.php";
+        $_SESSION['active']    = "3";
+        break;
     case 8:
         $page               = "include/detail_pendaftaran.php";
         $ida                = $_GET['ida'];
@@ -143,7 +142,7 @@ switch ($getPage) {
         break;
     case 24:
         $page               = "include/jadwal_user.php";
-        $_SESSION['active'] = "12";        
+        $_SESSION['active'] = "12";
         break;
     case 25:
         $page               = "include/konfirmasi_pembayaran_spp_admin.php";
@@ -157,24 +156,24 @@ switch ($getPage) {
         $page               = "include/konfirmasi_pembayaran_kegiatan.php";
         $_SESSION['active'] = "7";
         break;
-	default:
-		$page 	= "include/home.php";
-		$_SESSION['active']	= "1";
-		break;
+    default:
+        $page     = "include/home.php";
+        $_SESSION['active']    = "1";
+        break;
 }
 
 ?>
 
 <!doctype html>
 <html lang="en">
-	
-<head>
-    
-    <title>Dashboard <?php echo $role; ?></title>
-	
 
-    <?php  
-    	include "include/libs.php";
+<head>
+
+    <title>Dashboard <?php echo $role; ?></title>
+
+
+    <?php
+    include "include/libs.php";
     ?>
 </head>
 
@@ -199,71 +198,71 @@ switch ($getPage) {
                             <p>Home</p>
                         </a>
                     </li>
-					
-					<?php  
-					if ($role == "User") {
-					?>
-					<li class="<?php $_SESSION['active'] == 2 ? print("active") : print("") ?>">
-                        <a href="index.php?page=2">
-                            <i class="material-icons">person</i>
-                            <p>User Profile </p>
-                        </a>
-                    </li>
-					<?php
-					}
-					?>
 
-                    
-                    <?php  
-					if ($role == "Admin") {
-					?>
-					
-                    <li class="<?php $_SESSION['active'] == 9 ? print("active") : print("") ?>">
-                        <a href="index.php?page=18">
-                            <i class="material-icons">subject</i>
-                            <p>Laporan</p>
-                        </a>
-                    </li>
-					<?php
-					}
-					?>
-                    
-                    <?php  
+                    <?php
                     if ($role == "User") {
                     ?>
-                    <li class="<?php $_SESSION['active'] == 3 ? print("active") : print("") ?>">
-                        <a href="index.php?page=4">
-                            <i class="material-icons">content_paste</i>
-                            <p>Syarat Pendaftaran</p>
-                        </a>
-                    </li>
+                        <li class="<?php $_SESSION['active'] == 2 ? print("active") : print("") ?>">
+                            <a href="index.php?page=2">
+                                <i class="material-icons">person</i>
+                                <p>User Profile </p>
+                            </a>
+                        </li>
                     <?php
                     }
                     ?>
 
-                    
-                    
-                
+
+                    <?php
+                    if ($role == "Admin") {
+                    ?>
+
+                        <li class="<?php $_SESSION['active'] == 9 ? print("active") : print("") ?>">
+                            <a href="index.php?page=18">
+                                <i class="material-icons">subject</i>
+                                <p>Laporan</p>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                    ?>
+
+                    <?php
+                    if ($role == "User") {
+                    ?>
+                        <li class="<?php $_SESSION['active'] == 3 ? print("active") : print("") ?>">
+                            <a href="index.php?page=4">
+                                <i class="material-icons">content_paste</i>
+                                <p>Syarat Pendaftaran</p>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                    ?>
+
+
+
+
                     <li>
                         <a href="../logout.php">
                             <i class="material-icons text-gray">notifications</i>
                             <p>Logout</p>
                         </a>
                     </li>
-                   
+
                 </ul>
             </div>
         </div>
         <div class="main-panel">
             <div class="content">
                 <div class="container-fluid">
-                   
-                   <?php  
 
-                   include $page;
+                    <?php
 
-                   ?>
-                        
+                    include $page;
+
+                    ?>
+
                 </div>
             </div>
             <!-- <footer class="footer">
@@ -325,8 +324,8 @@ switch ($getPage) {
 <script src="../assets/js/demo.js"></script>
 
 <script>
-    $(document).ready(function(){
-        $("#cetak").click(function(){
+    $(document).ready(function() {
+        $("#cetak").click(function() {
             window.print();
         });
     });

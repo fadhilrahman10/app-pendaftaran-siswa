@@ -1,31 +1,32 @@
-<?php  
-    //start the session
-    session_start();
+<?php
+//start the session
+session_start();
 
-    if (!isset($_SESSION)) {
-        echo 'ada';
-        exit();
-        //echo'<script> window.location="index.php"; </script> ';
+if (!isset($_SESSION)) {
+    echo 'ada';
+    exit();
+    //echo'<script> window.location="index.php"; </script> ';
+}
+
+$_SESSION['is_data_parent_exist'] = "";
+$_SESSION['is_data_student_exist'] = "";
+$_SESSION['is_data_account_exist'] = "";
+
+if (isset($_POST['submit'])) {
+    foreach ($_POST as $key => $val) {
+        ${$key} = $val;
+        $_SESSION['' . $key . ''] = $val;
     }
 
-    $_SESSION['is_data_parent_exist'] = "";
-    $_SESSION['is_data_student_exist'] = "";
-    $_SESSION['is_data_account_exist'] = "";
-
-    if(isset($_POST['submit'])){
-        foreach ($_POST as $key => $val) {
-            ${$key} = $val;
-            $_SESSION[''.$key.''] = $val;
-        }
-
-        if (!empty($_SESSION)) {
-            echo'<script> window.location="daftar_data_orangtua.php"; </script> ';
-            print_r($_SESSION);
-        }
+    if (!empty($_SESSION)) {
+        echo '<script> window.location="daftar_siswa_baru.php"; </script> ';
+        print_r($_SESSION);
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
@@ -46,6 +47,7 @@
     <link rel="stylesheet" href="assets/css/main.css">
 
 </head>
+
 <body>
     <div class="container">
 
@@ -59,9 +61,11 @@
                     <div class="card-content">
                         <h3>Berikut adalah syarat pendaftaran siswa baru yang harus dipenuhi :</h3>
                         <ol>
-                            <li><font color="#2ecc71">Mengisi Formulir Pendaftaran <i class="fa fa-check"></font></i></li>
-                            <li>Fotocopy Akte kelahiran dan kartu keluarga 2 lembar</li>
-                            <li>Foto anak dan foto keluarga ukuran 2R</li>
+                            <li>
+                                <font color="#2ecc71">Mengisi Formulir Pendaftaran <i class="fa fa-check"></font></i>
+                            </li>
+                            <li>Fotocopy Akte kelahiran dan kartu keluarga</li>
+                            <li>Foto ukuran 2R</li>
                             <li>Ijazah dan SKL (Surat Kelulusan)</li>
                         </ol>
 
@@ -79,15 +83,19 @@
                         <p class="category">Periksan data anda dibawah, pastikan sudah benar</p>
                     </div>
                     <div class="card-content table-responsive">
-                        
-                        <a href="daftar_siswa_baru.php" class="btn btn-primary pull-right" ><i class="fa fa-pencil"></i> Edit Data</a>
+
+                        <a href="daftar_siswa_baru.php" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Edit Data</a>
                         <h3 style="overflow: hidden;"><b>Data Calon Siswa</b></h3>
                         <table class="table table-hover">
-                        
+
                             <tbody>
                                 <tr>
                                     <td><b>Email</b></td>
                                     <td>:<?php isset($_SESSION['email'])  ?  print($_SESSION['email']) : ""; ?> <a href="daftar_akun.php" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Nomor Induk Siswa</b></td>
+                                    <td>: <?php isset($_SESSION['nis'])  ?  print($_SESSION['nis']) : ""; ?></td>
                                 </tr>
                                 <tr>
                                     <td><b>Nama</b></td>
@@ -102,91 +110,40 @@
                                     <td>: <?php isset($_SESSION['birth_place'])  ?  print($_SESSION['birth_place']) : ""; ?>, <?php isset($_SESSION['birth_date'])  ?  print($_SESSION['birth_date']) : "2009-01-01"; ?></td>
                                 </tr>
                                 <tr>
+                                    <td><b>Agama</b></td>
+                                    <td>: <?php isset($_SESSION['agama'])  ?  print($_SESSION['agama']) : ""; ?></td>
+                                </tr>
+                                <tr>
                                     <td><b>Jenis Kelamin</b></td>
                                     <td>: <?php isset($_SESSION['gender']) && $_SESSION['gender'] == "L" ? print("Laki-laki") : print("Perempuan") ?></td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td><b>Anak Ke -</b></td>
                                     <td>: <?php isset($_SESSION['child_number'])  ?  print($_SESSION['child_number']) : ""; ?> dari <?php isset($_SESSION['child_total'])  ?  print($_SESSION['child_total']) : ""; ?> bersaudara</td>
                                 </tr>
-                                
                                 <tr>
-                                    <td><b>Di Jakarta ikut</b></td>
-                                    <td>: <?php isset($_SESSION['in_jakarta_follow'])  ?  print($_SESSION['in_jakarta_follow']) : ""; ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <a href="daftar_data_orangtua.php" class="btn btn-primary pull-right" style="margin-top: 30px;"><i class="fa fa-pencil"></i> Edit Data</a>
-
-
-                        
-                        
-                        <h3><b>Data Orangtua</b></h3>
-                        <table class="table table-hover">
-                        
-                            <tbody>
-                                <tr>
-                                    <td><b>Nama Ayah</b></td>
-                                    <td>: <?php isset($_SESSION['father_name'])  ?  print($_SESSION['father_name']) : ""; ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>TTL</b></td>
-                                    <td>: <?php isset($_SESSION['birth_place_father'])  ?  print($_SESSION['birth_place_father']) : ""; ?>, <?php isset($_SESSION['birth_date_father'])  ?  print($_SESSION['birth_date_father']) : "1980-01-01"; ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Pendidikan Terakhir</b></td>
-                                    <td>: <?php isset($_SESSION['father_last_education'])  ?  print($_SESSION['father_last_education']) : ""; ?></td>
-                                </tr>
-                                
-                                <tr>
-                                    <td><b>Pekerjaan</b></td>
-                                    <td>: <?php isset($_SESSION['father_job'])  ?  print($_SESSION['father_job']) : ""; ?></td>
-                                </tr>
-                                
-                                <tr>
-                                    <td><b>Agama</b></td>
-                                    <td>: <?php isset($_SESSION['father_religion'])  ?  print($_SESSION['father_religion']) : ""; ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Nama Ibu</b></td>
-                                    <td>: <?php isset($_SESSION['mother_name'])  ?  print($_SESSION['mother_name']) : ""; ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>TTL</b></td>
-                                    <td>: <?php isset($_SESSION['birth_place_mother'])  ?  print($_SESSION['birth_place_mother']) : ""; ?>, <?php isset($_SESSION['birth_date_mother'])  ?  print($_SESSION['birth_date_mother']) : "1980-01-01"; ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Pendidikan Terakhir</b></td>
-                                    <td>: <?php isset($_SESSION['mother_last_education'])  ?  print($_SESSION['mother_last_education']) : ""; ?></td>
-                                </tr>
-                                
-                                <tr>
-                                    <td><b>Pekerjaan</b></td>
-                                    <td>: <?php isset($_SESSION['mother_job'])  ?  print($_SESSION['mother_job']) : ""; ?></td>
-                                </tr>
-                                
-                                <tr>
-                                    <td><b>Agama</b></td>
-                                    <td>: <?php isset($_SESSION['mother_religion'])  ?  print($_SESSION['mother_religion']) : ""; ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Telp/HP</b></td>
+                                    <td><b>Telp</b></td>
                                     <td>: <?php isset($_SESSION['telp'])  ?  print($_SESSION['telp']) : ""; ?></td>
                                 </tr>
+                                <tr>
+                                    <td><b>Alamat</b></td>
+                                    <td>: <?php isset($_SESSION['alamat'])  ?  print($_SESSION['alamat']) : ""; ?></td>
+                                </tr>
                             </tbody>
                         </table>
+
+                        <a href="daftar_siswa_baru.php" class="btn btn-primary pull-right" style="margin-top: 30px;"><i class="fa fa-pencil"></i> Edit Data</a>
 
                         <hr>
                         <h3>Anda yakin data diatas benar?</h3>
                         <a href="proses_simpan_pendaftaran.php" class="btn btn-primary pull-right">Yakin, kirim data pendaftaran</a>
-                    
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-</html>
 
+</html>
